@@ -27,18 +27,38 @@ const commands = [];
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		const command = require(filePath);
+		console.log(command)
 		if ('data' in command && 'execute' in command) {
 			commands.push(command.data.toJSON());
+			console.log(commands+'first time')
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
 	}
 
-	console.log(commands)
+	console.log(commands+'second time')
 
 // Construct and prepare an instance of the REST module
 const rest = new REST().setToken(token);
 // and deploy your commands!
+
+// rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: [] })
+// 	.then(() => console.log('Successfully deleted all guild commands.'))
+// 	.catch(console.error);
+
+// rest.delete(Routes.applicationGuildCommand(clientId, guildId, '1171172488621871186'))
+// 	.then(() => console.log('Successfully deleted guild command'))
+// 	.catch(console.error);
+// 	rest.delete(Routes.applicationGuildCommand(clientId, guildId, '1171172488621871187'))
+// 	.then(() => console.log('Successfully deleted guild command'))
+// 	.catch(console.error);
+
+// 	rest.delete(Routes.applicationCommand(clientId, '1171172488621871186'))
+// 	.then(() => console.log('Successfully deleted application command'))
+// 	.catch(console.error);
+// 	rest.delete(Routes.applicationCommand(clientId, '1171172488621871187'))
+// 	.then(() => console.log('Successfully deleted application command'))
+// 	.catch(console.error);
 (async () => {
 	try {
 		console.log(`Started refreshing ${commands.length} application (/) commands.`);
